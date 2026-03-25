@@ -1,0 +1,681 @@
+/* ==========================================
+           CSS VARIABLER - Farver og skrifttyper
+           ==========================================
+           Her definerer vi alle farver ÉT STED, så de er nemme at ændre.
+           Hvis du vil ændre farver, skal du kun ændre dem her!
+        */
+:root {
+  /* FARVER - bruges overalt på siden */
+  --color-warm-black: #1a1612; /* Mørk brun-sort - BRUGES TIL: Header baggrund, footer, store tekster */
+  --color-warm-cream: #f5f1eb; /* Lys beige - BRUGES TIL: Baggrunde, lys tekst */
+  --color-terracotta: #c85a3e; /* Orange-rød - BRUGES TIL: Knapper, accenter, hover-effekter */
+  --color-earth: #8b6f47; /* Brun - BRUGES TIL: Detaljer (bruges faktisk ikke lige nu) */
+  --color-sage: #7a8a6f; /* Grøn - BRUGES TIL: Detaljer (bruges faktisk ikke lige nu) */
+  --color-warm-white: #fdfcfa; /* Næsten hvid - BRUGES TIL: Tekst på mørk baggrund */
+
+  /* SKRIFTTYPER - to forskellige skrifter */
+  --font-display: "Syne", sans-serif; /* Fed skrift til overskrifter */
+  --font-body: "Darker Grotesque", sans-serif; /* Normal skrift til brødtekst */
+}
+
+/* ==========================================
+           NULSTIL - Fjerner browser standard styling
+           ==========================================
+        */
+* {
+  margin: 0; /* Fjern alle standard marginer */
+  padding: 0; /* Fjern alle standard paddings */
+  box-sizing: border-box; /* Gør bredde/højde beregninger lettere */
+}
+
+/* ==========================================
+           BODY - Grundlæggende styling til hele siden
+           ==========================================
+        */
+body {
+  font-family: var(--font-body); /* Brug vores normal skrift */
+  background: var(--color-warm-cream); /* Lys beige baggrund */
+  color: var(--color-warm-black); /* Mørk tekst */
+  line-height: 1.6; /* Linjehøjde - gør tekst lettere at læse */
+  overflow-x: hidden; /* Skjul vandret scrollbar hvis noget går for langt */
+}
+
+/* ==========================================
+           HERO SEKTION - Den store øverste sektion
+           ==========================================
+        */
+.hero {
+  position: relative; /* Så børne-elementer kan placeres inde i den */
+  height: 100vh; /* 100vh = Fyld hele skærmhøjden */
+  min-height: 600px; /* Men mindst 600px høj */
+  display: flex; /* Brug flexbox til at centrere indhold */
+  align-items: center; /* Centrer lodret */
+  overflow: hidden; /* Skjul alt der går udenfor */
+  background: linear-gradient(135deg, var(--color-warm-black) 0%, #2a2420 100%);
+  /* ^ Dette laver en gradientvariabel baggrund fra mørk til lidt lysere */
+}
+
+/* HERO BAGGRUND - Farverige cirkler i baggrunden */
+.hero-background {
+  position: absolute; /* Lægger sig BAGVED indholdet */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  /* To cirkler med farver der lyser svagt */
+  background:
+    radial-gradient(
+      circle at 20% 50%,
+      rgba(200, 90, 62, 0.15) 0%,
+      transparent 50%
+    ),
+    /* Orange cirkel til venstre */
+    radial-gradient(
+        circle at 80% 50%,
+        rgba(122, 138, 111, 0.1) 0%,
+        transparent 50%
+      ); /* Grøn cirkel til højre */
+  opacity: 0; /* Start usynlig */
+  /* ANIMATION: Fade ind efter 0.3 sekunder */
+  animation: fadeIn 1.2s ease-out 0.3s forwards;
+}
+/* Selve billedet fylder containeren helt ud */
+.hero-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Fylder ud uden at blive strakt */
+  object-position: center; /* Centrer billedet (kan ændres til f.eks. "top") */
+}
+
+/* Mørkt overlay så teksten er læsbar ovenpå billedet */
+.hero-background::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(26, 20, 16, 0.25) 0%,
+    /* Var 0.75 - skruet ned */ rgba(42, 36, 32, 0.25) 100%
+      /* Var 0.6 - skruet ned */
+  );
+}
+
+/* HERO MØNSTER - Tynde lodrette linjer i baggrund */
+.hero-pattern {
+  position: absolute; /* Lægger sig BAGVED indholdet */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Gentagne lodrette linjer hver 40px */
+  /* background-image: repeating-linear-gradient(
+    90deg,
+    rgba(245, 241, 235, 0.02) 0px,
+    transparent 1px,
+    transparent 40px,
+    rgba(245, 241, 235, 0.02) 41px
+  ); */
+  opacity: 0.3; /* Meget gennemsigtig */
+}
+
+/* HERO INDHOLD - Teksten i hero sektionen */
+.hero-content {
+  position: relative; /* Ligger OVENPÅ baggrund og mønster */
+  z-index: 2; /* z-index: Jo højere tal, jo mere ovenpå. 2 = over baggrund */
+  max-width: 1400px; /* Max bredde så det ikke bliver for bredt */
+  margin: 0 auto; /* Centrer det vandret */
+  padding: 0 6%; /* Luft på siderne (6% af skærmbredde) */
+  width: 100%;
+}
+
+/* HERO BADGE - "Est. 2018 · Accra, Ghana" */
+.hero-badge {
+  display: inline-block; /* Kan have margin og padding */
+  font-family: var(--font-display); /* Fed skrift */
+  font-size: 0.9rem; /* Lille tekst */
+  font-weight: 600; /* Semi-fed */
+  letter-spacing: 0.15em; /* Ekstra mellemrum mellem bogstaver */
+  text-transform: uppercase; /* STORE BOGSTAVER */
+  color: var(--color-terracotta); /* Orange-rød farve */
+  margin-bottom: 1.5rem; /* Plads under */
+  opacity: 0; /* Start usynlig */
+  /* ANIMATION: Glider op efter 0.5 sekunder */
+  animation: slideUp 0.8s ease-out 0.5s forwards;
+}
+
+/* HERO OVERSKRIFT - "Sharp Cuts" */
+.hero h1 {
+  font-family: var(--font-display); /* Fed skrift */
+  /* clamp() = responsiv skriftstørrelse: minimum 3.5rem, foretrukket 12vw, maximum 9rem */
+  font-size: clamp(2.5rem, 10vw, 5rem);
+  font-weight: 800; /* Ekstra fed */
+  line-height: 0.9; /* Meget tæt linjehøjde = linjerne sidder tæt */
+  color: var(--color-warm-cream); /* Lys farve */
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.03em; /* Lidt tættere bogstaver (negativ spacing) */
+  opacity: 0; /* Start usynlig */
+  /* ANIMATION: Glider op efter 0.7 sekunder */
+  animation: slideUp 0.8s ease-out 0.7s forwards;
+}
+
+/* HERO UNDERTEKST - Beskrivelsen under overskrift */
+.hero-subtitle {
+  font-family: var(--font-body); /* Normal skrift */
+  font-size: clamp(1.1rem, 2vw, 2rem); /* Responsiv størrelse */
+  font-weight: 500; /* Mellem vægt */
+  color: rgba(245, 241, 235, 0.75); /* Lys farve, 75% gennemsigtig */
+  max-width: 600px; /* Max bredde */
+  margin-bottom: 3rem;
+  opacity: 0; /* Start usynlig */
+  /* ANIMATION: Glider op efter 0.9 sekunder */
+  animation: slideUp 0.8s ease-out 0.9s forwards;
+}
+
+/* HERO KNAPPER - Container til knapperne */
+.hero-cta {
+  display: flex; /* Brug flexbox */
+  gap: 1rem; /* Mellemrum mellem knapper */
+  flex-wrap: wrap; /* Knapper går i ny linje hvis der ikke er plads */
+  opacity: 0; /* Start usynlig */
+  /* ANIMATION: Glider op efter 1.1 sekunder */
+  animation: slideUp 0.8s ease-out 1.1s forwards;
+}
+
+/* ==========================================
+           KNAPPER - Generel knap styling
+           ==========================================
+        */
+.btn {
+  font-family: var(--font-display); /* Fed skrift */
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 1.2rem 2.5rem; /* Indvendig plads: lodret 1.2rem, vandret 2.5rem */
+  border: none; /* Ingen kant */
+  cursor: pointer; /* Hånd-markør når man holder musen over */
+  text-decoration: none; /* Fjern understregning fra links */
+  display: inline-block;
+  transition: all 0.3s ease; /* SMOOTH overgang når man hover - 0.3 sekunder */
+  text-transform: uppercase; /* STORE BOGSTAVER */
+  letter-spacing: 0.05em; /* Lidt ekstra mellemrum mellem bogstaver */
+}
+
+/* PRIMÆR KNAP - Orange knap */
+.btn-primary {
+  background: var(--color-terracotta); /* Orange-rød baggrund */
+  color: var(--color-warm-white); /* Hvid tekst */
+}
+
+/* PRIMÆR KNAP HOVER - Når du holder musen over */
+.btn-primary:hover {
+  background: #d66b4f; /* Lysere orange */
+  transform: translateY(-2px); /* Løft knappen 2px op */
+  box-shadow: 0 10px 30px rgba(200, 90, 62, 0.3); /* Skygge under knappen */
+}
+
+/* SEKUNDÆR KNAP - Gennemsigtig knap med kant */
+.btn-secondary {
+  background: transparent; /* Ingen baggrundsfarve */
+  color: var(--color-warm-cream); /* Lys tekst */
+  border: 2px solid var(--color-warm-cream); /* Lys kant */
+}
+
+/* SEKUNDÆR KNAP HOVER */
+.btn-secondary:hover {
+  background: var(--color-warm-cream); /* Lys baggrund */
+  color: var(--color-warm-black); /* Mørk tekst */
+  transform: translateY(-2px); /* Løft knappen op */
+}
+
+/* ==========================================
+           ABOUT SEKTION - "More Than Just a Haircut"
+           ==========================================
+        */
+.about {
+  padding: 8rem 6%; /* Plads over/under: 8rem, sider: 6% */
+  max-width: 1400px; /* Max bredde */
+  margin: 0 auto; /* Centrer */
+}
+
+/* SEKTION LABEL - Lille tekst over overskrifter */
+.section-label {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.2em; /* Meget ekstra mellemrum mellem bogstaver */
+  text-transform: uppercase; /* STORE BOGSTAVER */
+  color: var(--color-terracotta); /* Orange-rød */
+  margin-bottom: 1rem;
+}
+
+/* ABOUT INDHOLD - To kolonner ved siden af hinanden */
+.about-content {
+  display: grid; /* Brug CSS Grid */
+  grid-template-columns: 1fr 1.2fr; /* To kolonner: første er 1 del, anden er 1.2 dele (lidt bredere) */
+  gap: 4rem; /* Mellemrum mellem kolonner */
+  align-items: center; /* Centrer lodret */
+}
+
+/* ABOUT OVERSKRIFT */
+.about h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem); /* Responsiv størrelse */
+  font-weight: 700;
+  line-height: 1.1; /* Tæt linjehøjde */
+  color: var(--color-warm-black);
+  margin-bottom: 2rem;
+}
+
+/* ABOUT TEKST */
+.about-text {
+  font-size: 1.25rem; /* Lidt større end normal tekst */
+  line-height: 1.8; /* God linjehøjde for læsbarhed */
+  color: rgba(26, 22, 18, 0.8); /* Mørk, 80% ugennemsigtig */
+}
+
+.about-text p {
+  margin-bottom: 1.5rem; /* Plads mellem afsnit */
+}
+
+/* ABOUT FREMHÆVET BOX - "Walk-ins Welcome" */
+.about-highlight {
+  background: var(--color-warm-black); /* Mørk baggrund */
+  color: var(--color-warm-cream); /* Lys tekst */
+  padding: 3rem; /* Indvendig plads */
+  margin-top: 2rem;
+  border-left: 4px solid var(--color-terracotta); /* Orange streg til venstre */
+}
+
+.about-highlight h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.about-highlight p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  opacity: 0.9; /* Lidt gennemsigtig */
+}
+
+/* ==========================================
+           SERVICES SEKTION - Prisliste
+           ==========================================
+        */
+.services {
+  background: var(--color-warm-black); /* Mørk baggrund */
+  color: var(--color-warm-cream); /* Lys tekst */
+  padding: 8rem 6%;
+}
+
+.services-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.services h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 4rem;
+}
+
+/* SERVICES GRID - Kortene i gitter */
+.services-grid {
+  display: grid; /* Brug CSS Grid */
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  /* ^ Auto-fit: Tilpas automatisk antal kolonner baseret på skærmbredde 
+               minmax(320px, 1fr): Hver kolonne minimum 320px, ellers lige brede */
+  gap: 2rem; /* Mellemrum mellem kort */
+}
+
+/* SERVICE KORT - Hvert enkelt prisskilt */
+.service-card {
+  background: rgba(
+    245,
+    241,
+    235,
+    0.05
+  ); /* Meget lidt lys baggrund (5% gennemsigtig) */
+  padding: 2.5rem 2rem;
+  border: 1px solid rgba(245, 241, 235, 0.1); /* Meget tynd lys kant */
+  transition: all 0.3s ease; /* Smooth overgang ved hover */
+  /* ANIMATION: Start usynlig og flyttet ned */
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* SERVICE KORT HOVER - Når musen er over */
+.service-card:hover {
+  background: rgba(245, 241, 235, 0.08); /* Lidt lysere */
+  border-color: var(--color-terracotta); /* Orange kant */
+  transform: translateY(-5px); /* Løft 5px op */
+}
+
+/* SERVICE NAVN - "Classic Haircut" osv. */
+.service-name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--color-warm-white);
+}
+
+/* SERVICE PRIS - "GH₵30" osv. */
+.service-price {
+  font-family: var(--font-display);
+  font-size: 2.5rem; /* Stor tekst */
+  font-weight: 800; /* Ekstra fed */
+  color: var(--color-terracotta); /* Orange */
+  margin-bottom: 1rem;
+}
+
+/* SERVICE BESKRIVELSE */
+.service-description {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba(245, 241, 235, 0.7); /* Lys, 70% gennemsigtig */
+}
+
+/* ==========================================
+           LOCATION SEKTION - Find os / Adresse
+           ==========================================
+        */
+.location {
+  padding: 8rem 6%;
+  background: var(--color-warm-cream);
+}
+
+.location-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* To lige store kolonner */
+  gap: 4rem;
+  align-items: start; /* Juster til top */
+}
+
+.location h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 3rem;
+  color: var(--color-warm-black);
+}
+
+/* LOCATION DETALJE - Hver "box" med info */
+.location-detail {
+  margin-bottom: 2.5rem;
+}
+
+.location-detail h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-warm-black);
+  margin-bottom: 0.75rem;
+}
+
+.location-detail p {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: rgba(26, 22, 18, 0.75);
+}
+
+/* ÅBNINGSTIDER GRID */
+.hours-grid {
+  display: grid;
+  grid-template-columns: auto 1fr; /* To kolonner: første tilpasser sig, anden fylder resten */
+  gap: 0.5rem 2rem; /* Mellemrum: lodret 0.5rem, vandret 2rem */
+  font-size: 1.1rem;
+}
+
+.day {
+  font-weight: 600; /* Semi-fed */
+  color: var(--color-warm-black);
+}
+
+.time {
+  color: rgba(26, 22, 18, 0.7);
+}
+
+/* KORT PLACEHOLDER - Hvor kortet ville være */
+.map-placeholder {
+  /* background: linear-gradient(
+    135deg,
+    var(--color-warm-black) 0%,
+    #5a555212 100%
+  ); */
+  height: 500px; /* Fast højde */
+  /* display: flex; */
+  align-items: center; /* Centrer lodret */
+  justify-content: center; /* Centrer vandret */
+  color: var(--color-warm-cream);
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  position: relative; /* Så børne-elementer kan placeres inde i */
+  overflow: hidden;
+}
+
+.map-placeholder iframe {
+  top: 0;
+  left: 0;
+  width: 100%; /* Fylder hele bredden */
+  height: 100%; /* Fylder hele højden */
+  border: 0;
+
+  position: relative;
+  z-index: 2; /* Ligger OVER ::before elementet */
+  border: 0;
+  display: block;
+}
+
+/* KORT BAGGRUND EFFEKT */
+.map-placeholder::before {
+  content: ""; /* Tom content nødvendig for ::before */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* background:
+    radial-gradient(
+      circle at 30% 50%,
+      rgba(200, 90, 62, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 50%,
+      rgba(122, 138, 111, 0.08) 0%,
+      transparent 50%
+    ); */
+  z-index: 0;
+  /* betyder det ligger BAGVED indholdet */
+  pointer-events: none; /* Lader klik "falde igennem" til iframe'en nedenunder */
+}
+
+/* ==========================================
+           CONTACT SEKTION - Kontakt os
+           ==========================================
+        */
+.contact {
+  background: var(--color-warm-black);
+  color: var(--color-warm-cream);
+  padding: 8rem 6%;
+}
+
+.contact-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  text-align: center; /* Centrer tekst */
+}
+
+.contact h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.contact-subtitle {
+  font-size: 1.3rem;
+  color: rgba(245, 241, 235, 0.7);
+  margin-bottom: 4rem;
+  max-width: 700px;
+  margin-left: auto; /* Sammen med margin-right: auto centrerer det */
+  margin-right: auto;
+}
+
+/* KONTAKT METODER - Grid med WhatsApp, telefon osv. */
+.contact-methods {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(250px, 1fr)
+  ); /* Responsivt grid */
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+/* KONTAKT METODE KORT */
+.contact-method {
+  background: rgba(245, 241, 235, 0.05);
+  padding: 2.5rem 2rem;
+  text-decoration: none; /* Fjern understregning fra link */
+  color: inherit; /* Brug samme farve som forælderen */
+  display: block;
+  border: 1px solid rgba(245, 241, 235, 0.1);
+  transition: all 0.3s ease;
+  /* ANIMATION: Start usynlig og flyttet ned */
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.contact-method:hover {
+  background: rgba(245, 241, 235, 0.08);
+  border-color: var(--color-terracotta);
+  transform: translateY(-5px);
+}
+
+/* KONTAKT IKON - Emoji */
+.contact-icon {
+  font-size: 3rem; /* Stor emoji */
+  margin-bottom: 1rem;
+}
+
+.contact-method h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.contact-method p {
+  font-size: 1.1rem;
+  color: rgba(245, 241, 235, 0.7);
+}
+
+/* ==========================================
+           FOOTER - Bundtekst
+           ==========================================
+        */
+footer {
+  background: var(--color-warm-black);
+  color: rgba(245, 241, 235, 0.5); /* Lys, 50% gennemsigtig */
+  text-align: center;
+  padding: 3rem 6%;
+  font-size: 0.95rem;
+  border-top: 1px solid rgba(245, 241, 235, 0.1); /* Tynd lys linje øverst */
+}
+
+footer p {
+  margin: 0.5rem 0;
+}
+
+.footer-brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-warm-cream);
+}
+
+/* ==========================================
+           ANIMATIONER
+           ==========================================
+        */
+
+/* FADE IN ANIMATION - Fade ind effekt */
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* Start: usynlig */
+  }
+  to {
+    opacity: 1; /* Slut: synlig */
+  }
+}
+
+/* SLIDE UP ANIMATION - Glider op fra bunden */
+@keyframes slideUp {
+  from {
+    opacity: 0; /* Start: usynlig */
+    transform: translateY(30px); /* Start: 30px nede */
+  }
+  to {
+    opacity: 1; /* Slut: synlig */
+    transform: translateY(0); /* Slut: normal position */
+  }
+}
+
+/* ==========================================
+           RESPONSIVE - Mobil/tablet tilpasning
+           ==========================================
+        */
+
+/* TABLETS og mindre skærme */
+@media (max-width: 968px) {
+  .about-content,
+  .location-container {
+    grid-template-columns: 1fr; /* ÉN kolonne i stedet for to */
+    gap: 3rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(3rem, 10vw, 6rem); /* Mindre på tablets */
+  }
+}
+
+/* MOBIL - Små skærme */
+@media (max-width: 640px) {
+  .hero,
+  .about,
+  .services,
+  .location,
+  .contact {
+    padding: 4rem 6%; /* Mindre padding på mobil */
+  }
+
+  .service-card,
+  .contact-method {
+    padding: 2rem 1.5rem; /* Mindre padding i kort */
+  }
+}
+
+/* ==========================================
+           DIVERSE FORBEDRINGER
+           ==========================================
+        */
+
+/* SMOOTH SCROLL - Blød scroll når du klikker på links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* SELECTION - Når du markerer tekst */
+::selection {
+  background: var(--color-terracotta); /* Orange baggrund */
+  color: var(--color-warm-white); /* Hvid tekst */
+}
